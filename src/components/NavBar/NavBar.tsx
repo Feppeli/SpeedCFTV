@@ -5,7 +5,7 @@ const NavBar = () => {
 
     const handleClickMenu = (e: any) => {
         e.preventDefault()
-        alert("click")
+        alert("Menu em desenvolvimento :)")
     }
 
     return (

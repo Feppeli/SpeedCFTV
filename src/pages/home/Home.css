@@ -1,0 +1,34 @@
+.homeContainer{
+    background: var(--primary-color);
+    height: 100vh;
+    width: 100vw;
+
+    padding-top: 6rem ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.headerHomeSection{
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+
+.createTicket {
+  position: fixed; /* Fixa o modal na tela do usuário */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente */
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Garante que fique por cima de qualquer outro elemento */
+}
