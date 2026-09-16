@@ -1,0 +1,25 @@
+nav{
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .8rem .6rem;
+
+    position: fixed;
+    width: 100%;
+}
+
+nav button{
+    background: none;
+    border: none;
+}
+
+nav h1{
+    color: var(--ligth-text-color);
+    font-weight: bolder;
+
+}
+
+.Menu{
+    display: none;
+}
