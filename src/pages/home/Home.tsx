@@ -9,7 +9,8 @@ const Home = () => {
         date: "",
         description:"",
         startImage:"",
-        endImage:""
+        endImage:"",
+        nameCamera:""
     })
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,13 +50,22 @@ const Home = () => {
                 <div className='createTicket'>
                     <div className='ticketModal'>
                         <h2>Adicione Imagem ao relatório</h2>
-                        <input type="date" placeholder='Data' name='date' value={ticketFormData.date} onChange={handleChange} />
-                        <input type="text" placeholder='startImage' name='startImage' value={ticketFormData.startImage} onChange={handleChange} />
-                        <input type="text" placeholder='endImage' name='endImage' value={ticketFormData.endImage} onChange={handleChange} />
-                        <input type="text" placeholder='description' name='description' value={ticketFormData.description} onChange={handleChange} />
+                        <input type="date" className='dateInput' placeholder='Data' name='date' value={ticketFormData.date} onChange={handleChange} />
 
-                        <button>Confirmar</button>
-                        <button onClick={handleClose}>Cancelar</button>
+                        <input type="text" className='nameCameraInput' placeholder='nameCamera' name='nameCamera' value={ticketFormData.nameCamera} onChange={handleChange} />
+
+                        <div className='timeInputContainer'>
+                            <input type="text" className='startTimeInput' placeholder='Hora início' name='startImage' value={ticketFormData.startImage} onChange={handleChange} />
+
+                            <input type="text" className='endTimeInput' placeholder='Hora Fim' name='endImage' value={ticketFormData.endImage} onChange={handleChange} />
+
+                        </div>
+                        <p>Descrição:</p>
+                        <input type="text" className="descriptionInput" placeholder='Digite aqui a descrição da imagem' name='description' value={ticketFormData.description} onChange={handleChange} />
+
+
+                        <button className='submitButton'>Confirmar</button>
+                        <button className='exitButton' onClick={handleClose}>Cancelar</button>
                     </div>
 
                 </div>
