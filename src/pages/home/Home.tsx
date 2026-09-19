@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, type HtmlHTMLAttributes } from 'react';
 import './Home.css'
 import NavBar from '../../components/NavBar/NavBar';
 
@@ -28,6 +28,37 @@ const Home = () => {
     const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         setOpenTicketModal(false)
+    }
+
+    const handleAddImage = (e: React.MouseEvent<HTMLElement>) => {
+        e.preventDefault()
+
+        let data = JSON.stringify(ticketFormData)
+
+        if(ticketFormData.nameCamera == ""){
+            alert("O campo: Nome da Câmera está em branco, Corrija e envie novamente")
+        }
+        if(ticketFormData.date == ""){
+            alert("O campo: Nome da Câmera está em branco, Corrija e envie novamente")
+        }
+
+        if(ticketFormData.startImage == ""){
+            alert("O campo: Hora Inicial está em branco, Corrija e envie novamente")
+        }
+        if(ticketFormData.endImage == ""){
+            alert("O campo: Hora final está em branco, Corrija e envie novamente")
+        }
+
+        let prevData = localStorage.getItem("Relatorio")
+
+        if(prevData){
+            let data = `${JSON.stringify(prevData)}`
+            
+
+            console.log(data)
+        }else{
+            localStorage.setItem("Relatorio", data)
+        }
     }
  
     return (
@@ -64,7 +95,7 @@ const Home = () => {
                         <input type="text" className="descriptionInput" placeholder='Digite aqui a descrição da imagem' name='description' value={ticketFormData.description} onChange={handleChange} />
 
 
-                        <button className='submitButton'>Confirmar</button>
+                        <button className='submitButton' onClick={handleAddImage}>Confirmar</button>
                         <button className='exitButton' onClick={handleClose}>Cancelar</button>
                     </div>
 
