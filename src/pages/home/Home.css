@@ -193,3 +193,37 @@
     font-weight: bold;
     font-size: 1rem;
 }
+
+
+/* Resume modal */
+
+.resumeContainer{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+
+    z-index: 10;
+
+    top: 0;
+    left: 0;
+
+    background: var(--primary-color);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resumeContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1rem;
+    gap: 2rem;
+
+    background: white;
+    width: 90%;
+    height: 90%;
+
+    border-radius: 8px;
+}
