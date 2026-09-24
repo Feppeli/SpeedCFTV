@@ -18,6 +18,55 @@
     
 }
 
+.mainContent{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem 0rem;
+    width: 90%;
+    height: 100%;
+
+    color: var(--ligth-text-color);
+}
+
+.imageContents{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.imageContent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: var(--secondary-color);
+    margin-top: 1rem;
+
+    width: 100%;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.imageActions{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.imageActions button{
+    
+    margin: .2rem;
+    width: 4rem;
+    height: 2rem;
+
+    text-align: center;
+
+    border-radius: 8px;
+    border: none;
+}
+
 
 .createTicket {
     position: absolute; /* Fixa o modal na tela do usuário */

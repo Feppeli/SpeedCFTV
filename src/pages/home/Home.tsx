@@ -1,17 +1,20 @@
-import React, { useState, type HtmlHTMLAttributes } from 'react';
+import React, { useState} from 'react';
 import './Home.css'
 import NavBar from '../../components/NavBar/NavBar';
+
 
 const Home = () => {
 
     const [openTicketModal, setOpenTicketModal] = useState(false);
     const [ticketFormData, setTicketFormData]= useState({
+        id:0,
         date: "",
         description:"",
         startImage:"",
         endImage:"",
         nameCamera:""
     })
+    const [imagesDB, setImagesDB] = useState<Array<object>>([]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
@@ -33,15 +36,13 @@ const Home = () => {
     const handleAddImage = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault()
 
-        let data = JSON.stringify(ticketFormData)
-
+        // VALIDAÇÃO DE CAMPOS VAZIOS
         if(ticketFormData.nameCamera == ""){
             alert("O campo: Nome da Câmera está em branco, Corrija e envie novamente")
         }
         if(ticketFormData.date == ""){
             alert("O campo: Nome da Câmera está em branco, Corrija e envie novamente")
         }
-
         if(ticketFormData.startImage == ""){
             alert("O campo: Hora Inicial está em branco, Corrija e envie novamente")
         }
@@ -49,16 +50,40 @@ const Home = () => {
             alert("O campo: Hora final está em branco, Corrija e envie novamente")
         }
 
-        let prevData = localStorage.getItem("Relatorio")
-
-        if(prevData){
-            let data = `${JSON.stringify(prevData)}`
-            
-
-            console.log(data)
-        }else{
-            localStorage.setItem("Relatorio", data)
+        let data = localStorage.getItem('images')
+        if(data){
+            setImagesDB(JSON.parse(data))
         }
+
+        setImagesDB((prevImages) => {
+            const newImageID = prevImages.length + 1;
+
+            setTicketFormData((prev) => ({
+                ...prev,
+                id: newImageID,
+            }))
+
+            const newImageData = {
+                ...ticketFormData,
+                id: newImageID,
+            }
+
+            const updatedImages = [...prevImages, newImageData]
+            console.log("Array atualizado:", updatedImages);
+
+            return updatedImages
+        })
+
+        setTicketFormData({
+            id:0,
+            date: "",
+            description:"",
+            startImage:"",
+            endImage:"",
+            nameCamera:""
+        })
+
+        setOpenTicketModal(false)
     }
  
     return (
@@ -69,9 +94,27 @@ const Home = () => {
                     <button onClick={handleNewTicket}>Novo Relatório</button>
                     <button>Adicionar imagem</button>
                 </div>
-                <div>
-                    <div></div>
-                    <div></div>
+                <div className='mainContent'>
+                    <div>
+                        <h1>Relatório</h1>
+                    </div>
+                    <div className='imageContents'>
+                        {imagesDB.map((img: any): any => {
+                            return(
+                            <div key={img.id} className='imageContent'>
+                                <div>                                
+                                    <p>ID: {img.id}</p>
+                                    <p>Câmera: {img.nameCamera}</p>
+                                    <p>Hora inicial: {img.startImage}</p>
+                                    <p>Hora Final: {img.endImage}</p></div>
+                                <div className='imageActions'>
+                                    <button>Editar</button>
+                                    <button>Excluir</button>
+                                </div>
+                            </div>
+                            )
+                        })}
+                    </div>
                 </div>
             </section>
 
