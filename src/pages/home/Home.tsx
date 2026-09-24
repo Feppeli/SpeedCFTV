@@ -85,14 +85,22 @@ const Home = () => {
 
         setOpenTicketModal(false)
     }
+
+    const handleCleanImages = (e: React.MouseEvent) => {
+        e.preventDefault()
+
+        setImagesDB([])
+        localStorage.setItem('images', '')
+    }
  
     return (
         <>
             <NavBar/>
             <section className='homeContainer'>
                 <div className='headerHomeSection'>
-                    <button onClick={handleNewTicket}>Novo Relatório</button>
-                    <button>Adicionar imagem</button>
+                    {}
+                    <button onClick={handleCleanImages}>Novo Relatório</button>
+                    <button onClick={handleNewTicket}>Adicionar imagem</button>
                 </div>
                 <div className='mainContent'>
                     <div>
