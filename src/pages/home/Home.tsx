@@ -27,9 +27,47 @@ const Home = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+
+        var newValue = value
+
+        if(name === "startImage" || name === "endImage"){
+            // Remore tudo que não for número
+            let onlyNums = value.replace(/\D/g, "")
+
+            // validação de horas
+            if (onlyNums.length > 4 ){
+                onlyNums = onlyNums.slice(0, 4)
+            }
+            if( onlyNums.length >=2){
+                let hours = parseInt(onlyNums.slice(0, 2), 10)
+                if(hours > 23){
+                    hours = 23
+                }
+
+                onlyNums = hours.toString().padStart(2, "0") + onlyNums.slice(2)
+            }
+
+            // validação minutos
+            if(onlyNums.length === 4){
+                let minutes = parseInt(onlyNums.slice(2, 4), 10);
+                if(minutes > 59){
+                    minutes = 59
+                }
+
+                onlyNums = onlyNums.slice(0,2) + minutes.toString().padStart(2, "0");
+            }
+
+            if (onlyNums.length > 2) {
+                newValue = `${onlyNums.slice(0, 2)}:${onlyNums.slice(2, 5)}`;
+            }else{
+                newValue = onlyNums
+            }
+        }
+
         setTicketFormData((prev) => ({
-            ...prev, [name]: value
+            ...prev, [name]: newValue
         }))
+
     }
 
 
@@ -183,12 +221,12 @@ const Home = () => {
                             <h2>Adicione Imagem ao relatório</h2>
                             <input type="date" className='dateInput' placeholder='Data' name='date' value={ticketFormData.date} onChange={handleChange} />
 
-                            <input type="text" className='nameCameraInput' placeholder='nameCamera' name='nameCamera' value={ticketFormData.nameCamera} onChange={handleChange} />
+                            <input type="text" className='nameCameraInput' placeholder='Nome da câmera' name='nameCamera' value={ticketFormData.nameCamera} onChange={handleChange} />
 
                             <div className='timeInputContainer'>
-                                <input type="text" className='startTimeInput' placeholder='Hora início' name='startImage' value={ticketFormData.startImage} onChange={handleChange} />
+                                <input type="text" className='startTimeInput' maxLength={5} placeholder='Hora início' name='startImage' value={ticketFormData.startImage} onChange={handleChange} />
 
-                                <input type="text" className='endTimeInput' placeholder='Hora Fim' name='endImage' value={ticketFormData.endImage} onChange={handleChange} />
+                                <input type="text" className='endTimeInput' maxLength={5} placeholder='Hora Fim' name='endImage' value={ticketFormData.endImage} onChange={handleChange} />
 
                             </div>
                             <p>Descrição:</p>
