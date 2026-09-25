@@ -124,6 +124,27 @@ const Home = () => {
         }).join('\n') // une tudo com uma quebra de linha extra
     }
 
+    const handleCopyResume = () => {
+        const formattedText = imagesDB.map((item, i) => {
+            return(
+                `--- Imagem: ${i} ---\n\n` +
+               `Câmera: ${item.nameCamera}\n` +
+               `Data: ${item.date}\n` +
+               `Início: ${item.startImage}\n` +
+               `Fim: ${item.endImage}\n` +
+               `Descrição: ${item.description}`
+            )
+        }).join('\n\n')
+
+        navigator.clipboard.writeText(formattedText)
+            .then(() => {
+                alert("Texto copiado para a área de transferência!")
+            })
+            .catch((error) => {
+                alert("Ocorreu um erro ao copiar o texto:" + error)
+            })
+    }
+
     return (
         <>
             <NavBar />
@@ -189,7 +210,7 @@ const Home = () => {
                 <div className='resumeContainer'>
                     <div className='resumeContent'>
                         <div>
-                            <button>Copiar</button>
+                            <button onClick={handleCopyResume}>Copiar</button>
                             <button onClick={handleOpenResumeModal}>Cancelar</button>
                         </div>
                         <div className='resumePreview'>
