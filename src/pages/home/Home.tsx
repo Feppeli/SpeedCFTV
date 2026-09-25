@@ -32,14 +32,11 @@ const Home = () => {
         }))
     }
 
-    const handleNewTicket = async () => {
-        localStorage.setItem('Ticket', "true");
-        setOpenTicketModal(true);
-    }
 
-    const handleClose = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+    const handleOpenTicketModal = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        setOpenTicketModal(false)
+        setOpenTicketModal(!openTicketModal)
     }
 
     const handleOpenResumeModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -114,7 +111,7 @@ const Home = () => {
 
         return imagesDB.map((image, i) => {
             return (
-                `--- Imagem: ${i} ---\n` + '\n' +
+                `--- Imagem: ${i + 1} ---\n` + '\n' +
                 `Câmera: ${image.nameCamera} \n` +
                 `Data: ${image.date} \n` +
                 `Início: ${image.startImage} \n` +
@@ -126,13 +123,13 @@ const Home = () => {
 
     const handleCopyResume = () => {
         const formattedText = imagesDB.map((item, i) => {
-            return(
-                `--- Imagem: ${i} ---\n\n` +
-               `Câmera: ${item.nameCamera}\n` +
-               `Data: ${item.date}\n` +
-               `Início: ${item.startImage}\n` +
-               `Fim: ${item.endImage}\n` +
-               `Descrição: ${item.description}`
+            return (
+                `--- Imagem: ${i + 1} ---\n\n` +
+                `Câmera: ${item.nameCamera}\n` +
+                `Data: ${item.date}\n` +
+                `Início: ${item.startImage}\n` +
+                `Fim: ${item.endImage}\n` +
+                `Descrição: ${item.description}`
             )
         }).join('\n\n')
 
@@ -151,7 +148,7 @@ const Home = () => {
             <section className='homeContainer'>
                 <div className='headerHomeSection'>
                     <button onClick={handleCleanImages}>Novo Relatório</button>
-                    <button onClick={handleNewTicket}>Adicionar imagem</button>
+                    <button onClick={handleOpenTicketModal}>Adicionar imagem</button>
                     <button onClick={handleOpenResumeModal}>Gerar Relatório</button>
                 </div>
                 <div className='mainContent'>
@@ -199,7 +196,7 @@ const Home = () => {
 
 
                             <button className='submitButton' onClick={handleAddImage}>Confirmar</button>
-                            <button className='exitButton' onClick={handleClose}>Cancelar</button>
+                            <button className='exitButton' onClick={handleOpenTicketModal}>Cancelar</button>
                         </div>
 
                     </div>
@@ -209,12 +206,13 @@ const Home = () => {
             {resumeModal && (
                 <div className='resumeContainer'>
                     <div className='resumeContent'>
+                        <h1>Histórico</h1>
+                        <div className='resumePreview'>
+                            <p style={{ whiteSpace: 'pre-line' }}>{formatArrayToText()}</p>
+                        </div>
                         <div>
                             <button onClick={handleCopyResume}>Copiar</button>
                             <button onClick={handleOpenResumeModal}>Cancelar</button>
-                        </div>
-                        <div className='resumePreview'>
-                            <p style={{whiteSpace: 'pre-line'}}>{formatArrayToText()}</p>
                         </div>
                     </div>
                 </div>

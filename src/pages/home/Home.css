@@ -223,8 +223,32 @@
 
     background: white;
     width: 90%;
-    height: 90%;
 
     border-radius: 8px;
     
+}
+
+.resumePreview p{
+    max-width:90%;
+    text-wrap: wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.resumeContent > div{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.resumeContainer button{
+    max-width: 100%;
+    padding: 1rem;
+    margin-top: .5rem;
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    position: relative;
+    bottom: 0px;
 }
