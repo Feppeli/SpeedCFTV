@@ -15,6 +15,7 @@ interface imageItem {
 const Home = () => {
     const [resumeModal, setResumeModal] = useState(false)
     const [openTicketModal, setOpenTicketModal] = useState(false);
+    const [editModal, setOpenEditModal] = useState(false)
     const [ticketFormData, setTicketFormData] = useState({
         id: 0,
         date: "",
@@ -69,8 +70,6 @@ const Home = () => {
         }))
 
     }
-
-
 
     const handleOpenTicketModal = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -190,6 +189,56 @@ const Home = () => {
         setImagesDB((prevImages) => prevImages.filter((image) => image.id !== id));
     }
 
+    const handleEditeImage = (e: React.MouseEvent, id: any) => {
+        e.preventDefault();
+        if (editModal == false) {
+            setOpenEditModal(true)
+            localStorage.setItem('editIdImg', id)
+
+        }
+        else {
+            // VALIDAÇÃO DE CAMPOS VAZIOS
+            if (ticketFormData.date == "") {
+                alert("O campo: Data está em branco, Corrija e envie novamente")
+            }
+            else if (ticketFormData.nameCamera == "") {
+                alert("O campo: Nome da Câmera está em branco, Corrija e envie novamente")
+            }
+            else if (ticketFormData.startImage == "") {
+                alert("O campo: Hora Inicial está em branco, Corrija e envie novamente")
+            }
+            else if (ticketFormData.endImage == "") {
+                alert("O campo: Hora final está em branco, Corrija e envie novamente")
+            }
+            else {
+
+                let startHour = parseInt(ticketFormData.startImage.slice(0, 2));
+                let endHour = parseInt(ticketFormData.endImage.slice(0, 2));
+                let startMinute = parseInt(ticketFormData.startImage.slice(3, 5))
+                let endMinute = parseInt(ticketFormData.endImage.slice(3, 5))
+
+                if (startHour == endHour && startMinute >= endMinute || startHour > endHour) {
+                    alert("A hora inicial deve anteceder a hora final")
+                }
+
+
+                setImagesDB((prevImagesDB) => {
+                    return prevImagesDB.map(image => image.id == parseInt(id) ? { ...image, ...ticketFormData, id: id } : image)
+                })
+
+                setOpenEditModal(false)
+                setTicketFormData({
+                    id: 0,
+                    date: "",
+                    description: "",
+                    startImage: "",
+                    endImage: "",
+                    nameCamera: ""
+                })
+            }
+        }
+    }
+
     return (
         <>
             <NavBar />
@@ -213,7 +262,7 @@ const Home = () => {
                                         <p>Hora inicial: {img.startImage}</p>
                                         <p>Hora Final: {img.endImage}</p></div>
                                     <div className='imageActions'>
-                                        <button>Editar</button>
+                                        <button onClick={(e) => handleEditeImage(e, img.id)}>Editar</button>
                                         <button onClick={() => handleDeleteImage(img.id)}>Excluir</button>
                                     </div>
                                 </div>
@@ -222,7 +271,6 @@ const Home = () => {
                     </div>
                 </div>
             </section>
-
 
             {openTicketModal && (
                 <>
@@ -265,6 +313,34 @@ const Home = () => {
                     </div>
                 </div>
             )}
+
+            {editModal && (
+                <>
+                    <div className='createTicket'>
+                        <div className='ticketModal'>
+                            <h2>Adicione Imagem ao relatório</h2>
+                            <input type="date" className='dateInput' placeholder='Data' name='date' value={ticketFormData.date} onChange={handleChange} />
+
+                            <input type="text" className='nameCameraInput' placeholder='Nome da câmera' name='nameCamera' value={ticketFormData.nameCamera} onChange={handleChange} />
+
+                            <div className='timeInputContainer'>
+                                <input type="text" className='startTimeInput' maxLength={5} placeholder='Hora início' name='startImage' value={ticketFormData.startImage} onChange={handleChange} />
+
+                                <input type="text" className='endTimeInput' maxLength={5} placeholder='Hora Fim' name='endImage' value={ticketFormData.endImage} onChange={handleChange} />
+
+                            </div>
+                            <p>Descrição:</p>
+                            <input type="text" className="descriptionInput" placeholder='Digite aqui a descrição da imagem' name='description' value={ticketFormData.description} onChange={handleChange} />
+
+
+                            <button className='submitButton' onClick={(e) => handleEditeImage(e, localStorage.getItem('editIdImg'))}>Confirmar</button>
+                            <button className='exitButton' onClick={() => setOpenEditModal(false)}>Cancelar</button>
+                        </div>
+
+                    </div>
+                </>
+            )}
+
         </>
     )
 }
