@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Home.css'
 import NavBar from '../../components/NavBar/NavBar';
+import WrongPopUp from '../../components/WrongPopUp/WrongPopUp';
 
 
 interface imageItem {
@@ -16,6 +17,8 @@ const Home = () => {
     const [resumeModal, setResumeModal] = useState(false)
     const [openTicketModal, setOpenTicketModal] = useState(false);
     const [editModal, setOpenEditModal] = useState(false)
+    const [popUpModal, setOpenPopUpModal] = useState(false)
+    const [popUpMessage, setPopUpMessage] = useState("")
     const [ticketFormData, setTicketFormData] = useState({
         id: 0,
         date: "",
@@ -86,16 +89,24 @@ const Home = () => {
 
         // VALIDAÇÃO DE CAMPOS VAZIOS
         if (ticketFormData.date == "") {
-            alert("O campo: Data está em branco, Corrija e envie novamente")
+            let popUpMessage = "O campo: Data está em branco, Corrija e envie novamente"
+            setPopUpMessage(popUpMessage)
+            setOpenPopUpModal(false)
         }
         else if (ticketFormData.nameCamera == "") {
-            alert("O campo: Nome da Câmera está em branco, Corrija e envie novamente")
+            let popUpMessage = "O campo: Nome da Câmera está em branco, Corrija e envie novamente"
+            setPopUpMessage(popUpMessage)
+            setOpenPopUpModal(false)
         }
         else if (ticketFormData.startImage == "") {
-            alert("O campo: Hora Inicial está em branco, Corrija e envie novamente")
+            let popUpMessage = "O campo: Hora Inicial está em branco, Corrija e envie novamente"
+            setPopUpMessage(popUpMessage)
+            setOpenPopUpModal(false)
         }
         else if (ticketFormData.endImage == "") {
-            alert("O campo: Hora final está em branco, Corrija e envie novamente")
+            let popUpMessage = "O campo: Hora final está em branco, Corrija e envie novamente"
+            setPopUpMessage(popUpMessage)
+            setOpenPopUpModal(false)
         }
         else {
 
@@ -199,16 +210,24 @@ const Home = () => {
         else {
             // VALIDAÇÃO DE CAMPOS VAZIOS
             if (ticketFormData.date == "") {
-                alert("O campo: Data está em branco, Corrija e envie novamente")
+                let popUpMessage = "O campo: Data está em branco, Corrija e envie novamente"
+                setPopUpMessage(popUpMessage)
+                setOpenPopUpModal(false)
             }
             else if (ticketFormData.nameCamera == "") {
-                alert("O campo: Nome da Câmera está em branco, Corrija e envie novamente")
+                let popUpMessage = "O campo: Nome da Câmera está em branco, Corrija e envie novamente"
+                setPopUpMessage(popUpMessage)
+                setOpenPopUpModal(false)
             }
             else if (ticketFormData.startImage == "") {
-                alert("O campo: Hora Inicial está em branco, Corrija e envie novamente")
+                let popUpMessage = "O campo: Hora Inicial está em branco, Corrija e envie novamente"
+                setPopUpMessage(popUpMessage)
+                setOpenPopUpModal(false)
             }
             else if (ticketFormData.endImage == "") {
-                alert("O campo: Hora final está em branco, Corrija e envie novamente")
+                let popUpMessage = "O campo: Hora final está em branco, Corrija e envie novamente"
+                setPopUpMessage(popUpMessage)
+                setOpenPopUpModal(false)
             }
             else {
 
@@ -340,6 +359,8 @@ const Home = () => {
                     </div>
                 </>
             )}
+
+            {!popUpModal && <WrongPopUp popUpMessage={popUpMessage} setOpenPopUpModal={setOpenPopUpModal} openPopUpModal={popUpModal} />}
 
         </>
     )
